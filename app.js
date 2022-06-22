@@ -161,3 +161,68 @@ app.delete('/deletesupply/:id', (req, res) => {
         res.send('Insumo eliminado');
     });
 });
+
+//Todos los usuarios
+app.get('/users', (req, res) => {
+    const sql = 'SELECT * FROM users';
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('No hay usuarios registrados');
+        }
+    })
+});
+
+//Usuario por id   
+app.get('/users/:id', (req, res) => {
+    const {
+        id
+    } = req.params;
+    const sql = `SELECT * FROM users WHERE id = ${id}`;
+    connection.query(sql, (error, result) => {
+        if (error) throw error;
+        if (result.length > 0) {
+            res.json(result);
+        } else {
+            res.send('No se encontro el usuario');
+        }
+    })
+});
+
+//Nuevo usuario
+app.post('/adduser', (req, res) => {
+    const sql = 'INSERT INTO users SET ?';
+    const product = {
+        name: req.body.name,
+        email: req.body.email,
+        pass: req.body.pass,
+        rol: req.body.rol,
+    }
+    connection.query(sql, product, error => {
+        if (error) throw error;
+        res.send('Usuario agregado correctamente');
+    });
+});
+
+//Actualizar usuario
+app.put('/updateuser/:id', (req, res) => {
+    const {id} = req.params;
+    const {name, email, pass, rol} = req.body;
+    const sql = `UPDATE supplies SET name = '${name}', quantity = ${email}, pass = ${pass}, rol = ${rol} WHERE id = ${id}`;
+    connection.query(sql, error => {
+        if (error) throw error;
+        res.send('Usuario actualizado correctamente');
+    });
+});
+
+//Eliminar Usuario
+app.delete('/deleteuser/:id', (req, res) => {
+    const {id} = req.params;
+    const sql = `DELETE FROM users WHERE is = ${id}`;
+    connection.query(sql, error =>{
+        if (error) throw error;
+        res.send('Usuario eliminado');
+    });
+});
