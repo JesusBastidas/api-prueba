@@ -20,15 +20,19 @@ const connection = mysql.createConnection({
 });
 
 //Verificacion de coneccion
-connection.connect(error => {
+/* connection.connect(error => {
     if (error) throw error;
     console.log('Correctamente conectado a la base de datos');
-});
+}); */
 
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
 
 //Ruta 
 app.get('/', (req, res) => {
+    connection.connect(error => {
+        if (error) throw error;
+        console.log('Correctamente conectado a la base de datos');
+    });
     res.send('Bienvenido a la API de Salchichon Gonzalez');
 });
 
