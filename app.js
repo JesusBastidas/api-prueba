@@ -34,10 +34,12 @@ app.get('/', (req, res) => {
         console.log('Correctamente conectado a la base de datos');
     });
     res.send('Bienvenido a la API de Salchichon Gonzalez');
+    connection.end();
 });
 
 //Todos los productos
 app.get('/products', (req, res) => {
+    connection.connect();
     const sql = 'SELECT * FROM products';
     connection.query(sql, (error, results) => {
         if (error) throw error;
@@ -47,6 +49,7 @@ app.get('/products', (req, res) => {
             res.send('No hay productos');
         }
     })
+    connection.end();
 });
 
 //Producto por id
