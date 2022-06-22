@@ -1,10 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+/* const cors = require('cors'); */
 
 //Acceso a todos los origenes CORS
-app.use(cors()); 
+/* app.use(cors());  */
 
 
 const PORT = process.env.PORT || 3050;
